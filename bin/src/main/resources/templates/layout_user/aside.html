@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="col-lg-3 aside" style="border-right: 1px solid #E57C23; font-size: 14px;">
+        <div class="d-flex align-items-start">
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <div class="card border-light mb-3" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <div class="d-flex align-content-center justify-content-center">
+                            <img src="{{urlAvt($u.avatar)}}" class="rounded-circle w-25" alt="...">
+
+                        </div>
+
+                        <h6 class="card-title d-flex justify-content-center">{{$u.fullname}}</h6>
+                        <p class="card-title mt-2 d-flex justify-content-center" style="font-size: 13px;">0 điểm
+                        </p>
+                        <p class="card-title mt-2 d-flex justify-content-center" style="font-size: 13px;">
+                            Số dư TK: {{$pay.pay_money | currency:'':0}} VNĐ
+                        </p>
+                        <p class="card-title mt-2 d-flex justify-content-center" style="font-size: 13px;">
+                            TK khuyến mãi: 0 VNĐ
+                        </p>
+                        <a type="button" class="btn btn-primary w-100" href="/home/manager/pay"><i class="fa-solid fa-wallet" style="margin-right: 5px;"></i> Nạp tiền</a>
+                    </div>
+                </div>
+                <a href="/home/manager/profile" class="nav-link text-center">Cập nhật thông tin</a>
+                <a href="/home/manager/post" class="nav-link text-center">Quản lý tin đăng</a>
+                <a href="/home/manager/post-deadline-extension" class="nav-link text-center">Quản lý tin đăng bị ẩn</a>
+
+                <a href="/home/manager/likes" class="nav-link text-center">Quản lý tin đăng thích</a>
+                <a href="/home/manager/history-transactions" class="nav-link text-center">Lịch sử giao dịch</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

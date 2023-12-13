@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{index_user::areas(~{::main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <main>
+        <!-- Header Start -->
+        <div class="container-fluid header bg-white p-0">
+            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
+                <div class="col-md-6 p-5 mt-lg-5">
+                    <h1 class="display-5 animated fadeIn mb-4">Tìm Một <span class="text-primary">Ngôi Nhà Hoàn Hảo</span> Để Sống Cùng Gia Đình Của Bạn.</h1>
+                    <p class="animated fadeIn mb-4 pb-2">Chúng tôi cam kết sẽ mang đến cho bạn những ngôi nhà mơ ước. Chúng tôi hướng tới và xây dựng một thương hiệu mang đến cho bạn sự tin tưởng - chất lượng - uy tín là hàng đầu.</p>
+                    <a href="#category" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Bắt Đầu</a>
+                </div>
+                <div class="col-md-6 animated fadeIn">
+                    <div class="owl-carousel header-carousel">
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src="img/carousel-1.jpg" alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src="img/carousel-2.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <!-- Category Start -->
+        <div class="container-xxl py-5" id="category">
+            <div class="container">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
+                    <hr style="width: 200px; height: 3px; color: #E57C23; margin: auto; margin-bottom: 30px;">
+                    <h1 class="mb-3">Loại Bất Động Sản</h1>
+                    <p>Bất động sản có sự đa dạng về loại hình, từ nhà ở, văn phòng, nhà xưởng, đến các loại bất động sản nghỉ dưỡng, thương mại,... Mỗi loại hình bất động sản lại có những đặc điểm và ưu điểm riêng, phù hợp với nhu cầu của từng đối tượng
+                        khách hàng.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s" th:each="typeProperty : ${typeProperty}">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" th:href="@{'/home/list-post-key?type_id=' + ${typeProperty.types_id}}">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" th:src="@{'img/'+${typeProperty.types_name}+'.png'}" alt="Icon" style="width: 45px;">
+                                </div>
+                                <h6 class="text-primary" th:utext="${typeProperty.types_name}"></h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category End -->
+
+
+        <!-- About Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                        <div class="about-img position-relative overflow-hidden p-5 pe-0">
+                            <img class="img-fluid w-100" src="{{url(albumsPost[0].albums_name)}}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                        <h1 class="mb-4">{{introThePost.post_title.length > 20 ? (introThePost.post_title | limitTo:20) + '...' : introThePost.post_title | uppercase}}</h1>
+                        <p class="mb-4">Mô Tả: {{ introThePost.post_content.length > 50 ? (introThePost.post_content | limitTo:50) + '...' : introThePost.post_content }}</p>
+                        <p><i class="fa fa-ruler-combined text-primary me-2"></i> {{introThePost.acreage}} m²</p>
+                        <p><i class="fa fa-bed text-primary me-2"></i> {{introThePost.bed}} Phòng ngủ</p>
+                        <p><i class="fa fa-bath text-primary me-2"></i> {{introThePost.toilet}} Toilet</p>
+                        <a class="btn btn-primary py-3 px-5 mt-3" href="/home/detail?id={{introThePost.post_id}}">Xem Thêm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
+
+
+        <!-- Property List Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-0 gx-5 align-items-end">
+                    <div class="col-lg-6">
+                        <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                            <h3 class="mb-3">Dự án bất động sản</h3>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+                        <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
+                            <li class="nav-item me-2">
+                                <a class="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">Tin Nổi Bật</a>
+                            </li>
+                            <!-- <li class="nav-item me-2">
+                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">Tin Hot</a>
+                            </li> -->
+                            <li class="nav-item me-0">
+                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">Tin Thường</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane fade show p-0 active">
+                        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" ng-repeat="p in listPostDiamond">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="/home/detail?id={{p.post_id}}">
+                                            <img class="img-fluid" src="{{url(p.firstImage)}}" alt="">
+                                        </a>
+                                        <!-- <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Để bán</div> -->
+                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                            {{p.types_id.types_name}}
+                                        </div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <h5 class="text-primary mb-3">{{p.price}}</h5>
+                                        <a class="d-block h5 mb-2" href="/home/detail?id={{p.post_id}}">
+                                            {{p.post_title}}
+                                        </a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{p.addresss}}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>{{p.acreage}} m²</small>
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>{{p.bed}} PN</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>{{p.toilet}} Toilet</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
+                                <a class="btn btn-primary py-3 px-5" href="/home/list-post">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div id="tab-2" class="tab-pane fade show p-0">
+                        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" ng-repeat="p in listPostHotsNew">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="/home/detail?id={{p.post_id}}">
+                                            <img class="img-fluid" src="{{url(p.firstImage)}}" alt="">
+                                        </a>
+                                        
+                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                            {{p.types_id.types_name}}
+                                        </div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <h5 class="text-primary mb-3">{{p.price}}</h5>
+                                        <a class="d-block h5 mb-2" href="/home/detail?id={{p.post_id}}">
+                                            {{p.post_title.length > 25 ? (introThePost.post_title | limitTo:25) + '...' : introThePost.post_title}}
+                                        </a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{p.addresss}}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>{{p.acreage}} m²</small>
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>{{p.bed}} PN</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>{{p.toilet}} Toilet</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 text-center">
+                                <a class="btn btn-primary py-3 px-5" href="/home/list-post">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div id="tab-3" class="tab-pane fade show p-0">
+                        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" ng-repeat="p in listPostOften">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="/home/detail?id={{p.post_id}}">
+                                            <img class="img-fluid" src="{{url(p.firstImage)}}" alt="">
+                                        </a>
+                                        <!-- <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Để bán</div> -->
+                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                            {{p.types_id.types_name}}
+                                        </div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <h5 class="text-primary mb-3">{{p.price}}</h5>
+                                        <a class="d-block h5 mb-2" href="/home/detail?id={{p.post_id}}">
+                                            {{p.post_title.length > 25 ? (p.post_title | limitTo:25) + '...' : p.post_title}}
+                                        </a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{p.addresss}}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>{{p.acreage}} m²</small>
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>{{p.bed}} PN</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>{{p.toilet}} Toilet</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 text-center">
+                                <a class="btn btn-primary py-3 px-5" href="/home/list-post">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Property List End -->
+
+        <!-- Property List Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-0 gx-5 align-items-end">
+                    <div class="col-lg-6">
+                        <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                            <h3 class="mb-3">Real Estate đề xuất</h3>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane fade show p-0 active">
+                        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" ng-repeat="p in postForYou">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="/home/detail?id={{p.post_id}}">
+                                            <img class="img-fluid" src="{{url(p.firstImage)}}" alt="">
+                                        </a>
+                                        <!-- <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Để bán</div> -->
+                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                            {{p.types_id.types_name}}
+                                        </div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <h5 class="text-primary mb-3">{{p.price}}</h5>
+                                        <a class="d-block h5 mb-2" href="/home/detail?id={{p.post_id}}">
+                                            {{p.post_title.length > 35 ? (p.post_title | limitTo:35) + '...' : p.post_title}}
+                                        </a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{p.addresss}}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>{{p.acreage}} m²</small>
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>{{p.bed}} PN</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>{{p.toilet}} Toilet</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
+                                <a class="btn btn-primary py-3 px-5" href="/home/list-post">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Property List End -->
+
+        <!-- Property List Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-0 gx-5 align-items-end">
+                    <div class="col-lg-6">
+                        <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                            <h3 class="mb-3">Hỗ trợ tiện ích</h3>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-content row">
+                    <div class="col-lg-3">
+                        <a href="https://batdongsan.com.vn/ho-tro-tien-ich/ht-xem-tuoi-xay-nha">
+                            <div class="card mb-3 wow fadeInUp" data-wow-delay="0.3s" style="max-width: 540px;">
+                                <div class="row g-0">
+                                    <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                        <img src="https://staticfile.batdongsan.com.vn/images/icons/color/ic-ying-yang.svg" class="img-fluid" alt="...">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Xem tuổi xây nhà</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="https://batdongsan.com.vn/ho-tro-tien-ich/ht-du-toan-chi-tiet">
+                            <div class="card mb-3 wow fadeInUp" data-wow-delay="0.3s" style="max-width: 540px;">
+                                <div class="row g-0">
+                                    <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                        <img src="https://staticfile.batdongsan.com.vn/images/icons/color/ic-house.svg" class="img-fluid" alt="...">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Chi phí làm nhà</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="https://batdongsan.com.vn/ho-tro-tien-ich/ht-tinh-lai-suat">
+                            <div class="card mb-3 wow fadeInUp" data-wow-delay="0.3s" style="max-width: 540px;">
+                                <div class="row g-0">
+                                    <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                        <img src="https://staticfile.batdongsan.com.vn/images/home/calculator.svg" class="img-fluid" alt="...">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Tính lãi suất</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="https://batdongsan.com.vn/ho-tro-tien-ich/ht-xem-huong-nha">
+                            <div class="card mb-3 wow fadeInUp" data-wow-delay="0.3s" style="max-width: 540px;">
+                                <div class="row g-0">
+                                    <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                        <img src="https://staticfile.batdongsan.com.vn/images/icons/color/ic-feng-shui.svg" class="img-fluid" alt="...">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Tư vấn phong thủy</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Property List End -->
+
+        <!-- Property List Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-0 gx-5 align-items-end">
+                    <div class="col-lg-6">
+                        <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                            <h3 class="mb-3">Doanh nghiệp tiêu biểu</h3>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-content row">
+                    <div class="col-sm-12">
+                        <div class="slider_auto">
+                            <div class="slide-track">
+                                <div class="slide">
+                                    <div class="img"></div>
+                                    <div class="img"></div>
+
+
+                                    <div class="img"></div>
+                                    <div class="img"></div>
+                                    <div class="img"></div>
+                                    <div class="img"></div>
+                                    <div class="img"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Property List End -->
+        <div th:if="${visible == 'true'}">
+            <div class="toast active">
+                <div class="toast-content">
+                    <div class="message">
+                        <span class="text text-1" th:utext="${thongbao}"></span>
+                    </div>
+                </div>
+                <div class="progress active"></div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

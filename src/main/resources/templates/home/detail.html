@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{index_user::areas(~{::main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <main>
+        <!-- Detail -->
+        <div class="container-xxl py-5" th:object="${post}">
+            <div class="container wow fadeInUp" data-wow-delay="0.1s">
+                <div class="row g-4">
+                    <!-- Detailed article content -->
+                    <div class="col-lg-9 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <!-- <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div> -->
+                            <div class="carousel-inner">
+                                <div th:each="a,state : ${albums}" th:class="${state.index == 0 ?'carousel-item active' : 'carousel-item'}">
+                                    <img th:src="${'/files/img/' + a.albums_name}" class="d-block w-100 h-100" th:alt="${a.albums_name}">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Bán</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Tất cả BĐS trên toàn quốc</li>
+                            </ol>
+                        </nav>
+                        <div class="title">
+                            <h4 th:utext="*{post_title.length() > 50 ? #strings.substring(post_title, 0, 50) : post_title}"></h4>
+                            <p th:utext="*{addresss}"></p>
+                            <hr class="mb2">
+                        </div>
+                        <div class="room-space">
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-2">
+                                    <p class="mb-1">Mức giá</p>
+                                    <strong class="text-dark" th:text="${#numbers.formatDecimal(post.price, 0, 'COMMA', 0, 'POINT')}"></strong>
+                                    <p style="font-size:13px;">
+                                        ~
+                                        <span th:text="${#numbers.formatDecimal(approximately, 0, 'COMMA', 0, 'POINT')}">
+                                              
+                                        </span> VNĐ
+
+                                        </span> /m²
+                                    </p>
+                                </div>
+                                <div class="col-lg-2 col-sm-2">
+                                    <p class="mb-1">Diện tích</p>
+                                    <strong class="text-dark"><span th:utext="*{acreage}"></span>/m²</strong>
+                                    <p style="font-size:13px;"></p>
+                                </div>
+                                <div class="col-lg-5 col-sm-5">
+                                    <p class="mb-1">Phòng ngủ</p>
+                                    <strong class="text-dark" th:utext="*{bed}"></strong>
+                                    <p style="font-size:13px;"></p>
+                                </div>
+                                <div class="col-lg-3 col-sm-3 mt-4" style="padding-left: 100px; display: flex;">
+                                    <!-- <a href="/share-facebook" style="padding-right:18px; color: rgb(255, 50, 50);">
+                                        <i class="fa-regular fa-share-from-square fa-xl"></i>
+                                    </a> -->
+                                    <!-- <a href="" class="" style="padding-right:18px;">
+                                        <i class="fa-regular fa-heart fa-xl"></i>
+                                    </a> -->
+                                    <div class="con-like" style="margin-right:18px;">
+                                        <input class="like" type="checkbox" title="like" ng-click="toggleLike()">
+                                        <div class="checkmark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="outline" viewBox="0 0 24 24">
+                                            <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
+                                          </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="filled" viewBox="0 0 24 24">
+                                            <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"></path>
+                                          </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="celebrate">
+                                            <polygon class="poly" points="10,10 20,20"></polygon>
+                                            <polygon class="poly" points="10,50 20,50"></polygon>
+                                            <polygon class="poly" points="20,80 30,70"></polygon>
+                                            <polygon class="poly" points="90,10 80,20"></polygon>
+                                            <polygon class="poly" points="90,50 80,50"></polygon>
+                                            <polygon class="poly" points="80,80 70,70"></polygon>
+                                          </svg>
+                                        </div>
+                                    </div>
+                                    <!-- <a href="" class="" style="color: rgb(255, 50, 50);">
+                                        <i class="fa-solid fa-exclamation fa-xl"></i>
+                                    </a> -->
+                                </div>
+                            </div>
+                            <hr class="mb2">
+                        </div>
+                        <div class="describe">
+                            <h5 class="">Thông tin mô tả</h5>
+                            <p th:utext="*{post_content.length() > 50 ? #strings.substring(post_content, 0, 50) : post_content}">
+                            </p>
+                        </div>
+                        <div class="characteristic">
+                            <h5>Đặc điểm bất động sản</h5>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"></li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <i class="fa-solid fa-ruler-combined fa-xl"></i>
+                                                </div>
+                                                <div class="col-lg-7">Diện tích</div>
+
+                                                <div class="col-lg-4">
+                                                    <div th:utext="*{acreage}"></div> m²</div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <i class="fa-solid fa-compass fa-xl"></i>
+                                                </div>
+                                                <div class="col-lg-7">Hướng nhà</div>
+
+                                                <div class="col-lg-4" th:utext="*{direction}"></div>
+                                            </div>
+
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <i class="fa-solid fa-bed fa-xl"></i>
+                                                </div>
+                                                <div class="col-lg-7">Phòng ngủ</div>
+
+                                                <div class="col-lg-4" th:utext="*{bed}"></div>
+                                            </div>
+
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <i class="fa-solid fa-file-circle-check fa-xl"></i>
+                                                </div>
+                                                <div class="col-lg-7">Pháp lý</div>
+
+                                                <div class="col-lg-4" th:utext="*{juridical}"></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item"></li>
+                                    </ul>
+                                </div>
+                                <div class="col">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"></li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <i class="fa-solid fa-hand-holding-dollar fa-xl"></i>
+                                                </div>
+                                                <div class="col-lg-7">Mức giá (VNĐ)</div>
+
+                                                <div class="col-lg-4" th:utext="*{price}"></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <i class="fa-solid fa-house-user fa-xl"></i>
+                                                </div>
+                                                <div class="col-lg-7">Hướng ban công</div>
+
+                                                <div class="col-lg-4" th:utext="*{balcony}"></div>
+                                            </div>
+
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <i class="fa-solid fa-bath fa-xl"></i>
+                                                </div>
+                                                <div class="col-lg-7">Số toilet</div>
+
+                                                <div class="col-lg-4" th:utext="*{toilet}"></div>
+                                            </div>
+
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <i class="fa-solid fa-kitchen-set fa-xl"></i>
+                                                </div>
+                                                <div class="col-lg-7">Nội thất</div>
+
+                                                <div class="col-lg-4" th:utext="*{interior}"></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-information">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5>Thông tin dự án</h5>
+                                <a href="/home/list-post">Xem 14 tin đăng khác</a>
+                            </div>
+
+                        </div>
+                        <div class="maps-project">
+                            <h5>Xem trên bản đồ</h5>
+                            <div class="col-sm-12">
+                                <label for="exampleInputEmail1" class="form-label">Vị trí</label>
+                                <div id="mapDetail" style="width:100%;height: 50vh;"></div>
+
+                            </div>
+                            <h5>Video Youtube</h5>
+                            <div class="col-sm-12" th:if="*{linkVideo != null}">
+                                <iframe width="100%" height="500" th:src="@{'https://www.youtube.com/embed/' + *{linkVideo}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="key-word">
+                            <h5>Tìm kiếm theo từ khóa</h5>
+                            <div class="row">
+                                <div class="col" style="padding: 5px;">
+                                    <a type="button" class="btn btn-outline-secondary mb-2" ng-repeat="sugg in suggest" href="/home/list-post-key?type_id={{sugg.types_id}}" style="margin-right: 10px;">
+                                        {{sugg.types_name}}
+                                    </a>
+
+                                </div>
+                            </div>
+                            <hr class="mb-3">
+                        </div>
+                        <div class="Date-Submitted">
+                            <!-- <h5>Ngày đăng</h5> -->
+                            <div class="row">
+                                <div class="col">
+                                    <p>Ngày đăng</p>
+                                    <strong th:text="*{create_at}"></strong>
+                                </div>
+                                <div class="col">
+                                    <p>Ngày hết hạn</p>
+                                    <strong th:text="*{end_date}"></strong>
+                                </div>
+                                <div class="col">
+                                    <p>Loại tin</p>
+                                    <strong th:text="*{services_id.services_name}"></strong>
+                                </div>
+                                <div class="col">
+                                    <p>Mã tin</p>
+                                    <strong th:text="*{post_id}"></strong>
+                                </div>
+                            </div>
+                            <hr class="mb-3">
+                        </div>
+                    </div>
+                    <!-- Detailed article content -->
+                    <!-- Extra information -->
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="card border-light mb-3" style="max-width: 18rem;">
+                            <div class="card-body">
+                                <div class="d-flex align-content-center justify-content-center" th:if="*{users_id.avatar != '' && users_id.avatar != null}">
+                                    <img th:src="@{'/files/avatar/'+*{users_id.avatar}}" class="rounded-circle w-25" alt="...">
+                                </div>
+                                <div class="d-flex align-content-center justify-content-center" th:if="*{users_id.avatar == '' || users_id.avatar == null}">
+                                    <img th:src="@{'/files/avatar/profile.png'}" class="rounded-circle w-25" alt="...">
+                                </div>
+                                <p class="card-title mt-2 d-flex justify-content-center" style="font-size: 13px;">Được đăng bởi</p>
+                                <h5 class="card-title d-flex justify-content-center" th:utext="*{users_id.fullname}"></h5>
+
+                                <input type="button" class="btn btn-primary w-100 mt-4" th:value="*{users_id.phone}" id="togglePhoneButton">
+                                <button type="button" class="btn btn-outline-light w-100 ntact" id="contact">Gửi email</button>
+                                <button type="button" class="btn btn-outline-light w-100 mt-2" id="contact-two">Yêu cầu liên hệ lại</button>
+                            </div>
+                        </div>
+                        <div id="contactForm">
+                            <h1 style="color: #025464">Gửi Email!</h1>
+                            <small>Tin nhắn của bạn sẽ được gửi đi trong vài phút!</small>
+                            <form action="/home/contact-email" method="post">
+                                <input type="text" name="to" th:value="*{users_id.email}" hidden>
+                                <input type="text" name="fullNameTo" th:value="*{users_id.fullname}" hidden>
+                                <input placeholder="Họ và tên" name="fullNameFrom" type="text" required />
+                                <input placeholder="Số điện thoại" name="phone" type="text" required />
+                                <input placeholder="Tiêu đề" name="subject" type="text" required />
+                                <textarea placeholder="Nội dung" name="content"></textarea>
+                                <input class="formBtn" type="submit" value="Gửi" />
+                                <input class="formBtn" type="reset" value="Làm mới" />
+                            </form>
+                        </div>
+                        <div id="contactForm-two">
+                            <h1 style="color: #025464">Gửi SMS!</h1>
+                            <small>Tin nhắn của bạn sẽ được gửi đi trong vài phút!</small>
+                            <form action="/home/contact-sms" method="post">
+                                <input placeholder="Họ và tên" name="fullname" type="text" required />
+                                <input placeholder="Số điện thoại" name="phone" th:value="*{users_id.phone}" type="text" hidden/>
+                                <textarea placeholder="Thông tin liên hệ" name="content"></textarea>
+                                <input class="formBtn" type="submit" value="Gửi" />
+                                <input class="formBtn" type="reset" value="Làm mới" />
+                            </form>
+                        </div>
+                        <div class="more-information-1">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-secondary ">
+                                    <strong>Tin hot</strong>
+                                </li>
+                                <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center" ng-repeat="p in postHotNew">
+                                    <a href="/home/detail?id={{p.post_id}}">
+                                        <span>{{p.post_title.length > 60 ? (p.post_title | limitTo:60) + '...' : p.post_title}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Extra information -->
+                </div>
+
+            </div>
+        </div>
+        <!-- Detail -->
+    </main>
+</body>
+
+</html>

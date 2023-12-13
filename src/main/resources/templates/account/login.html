@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Fpoly</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/Real_Estate.png" type="image/x-icon">
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/login.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <a href="/home" class="corner-button"><i class="fa-solid fa-house fa-xl" style="color: #ea8423;"></i></a>
+    <div class="container" ng-app="validation">
+        <!-- Captcha -->
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <!-- Captcha -->
+        <div class="forms-container">
+            <div class="signin-signup">
+                <form action="/login/action-test" method="post" class="sign-in-form" id="dangnhap">
+                    <h2 class="title">Đăng nhập</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Tên đăng nhập" name="username" id="dnhap_uname">
+                        <span class="form-message item3"></span>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Mật khẩu" name="password" id="dnhap_pass">
+                        <button type="button" id="btn_dnhap_pass">Hiện</button>
+                        <span class="form-message item3"></span>
+                    </div>
+                    <input type="submit" value="Đăng nhập" class="btn solid btn-dnhap">
+                    <hr>
+                    <div class="qmk"> <a href="/forget-password">Quên mật khẩu?</a></div>
+                </form>
+
+                <form action="/signup/action" method="post" class="sign-up-form" onsubmit="return validateFormSignUp()" name="dky" id="dangky">
+                    <h2 class="title">Đăng ký</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user item1"></i>
+                        <input id="username" type="text" placeholder="Tên tài khoản" name="username" class="item2" autocomplete="off">
+                        <span class="form-message item3"></span>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-envelope item1"></i>
+                        <input id="email" type="text" placeholder="Email" name="email" class="item2" autocomplete="off">
+                        <span class="form-message item3"></span>
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-phone item1"></i>
+                        <input id="phone" type="text" placeholder="Số điện thoại" name="phone" maxlength="10" class="item2" autocomplete="off">
+                        <span class="form-message item3"></span>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock item1"></i>
+                        <input id="password" type="password" placeholder="Mật khẩu" name="passwords" class="item2" autocomplete="off">
+                        <span class="form-message item3"></span>
+                        <button type="button" id="btn_dky_pass">Hiện</button>
+                    </div>
+
+                    <div class="input-field">
+                        <i class="fas fa-lock item1"></i>
+                        <input id="repassword" type="password" placeholder="Xác nhận mật khẩu" name="Repasswords" class="item2" autocomplete="off">
+                        <span class="form-message item3"></span>
+                        <button type="button" id="btn_dky_repass">Hiện</button>
+                    </div>
+                    <!-- Captcha -->
+                    <div class="captcha">
+                        <div class="g-recaptcha" th:data-sitekey="${@environment.getProperty('recaptcha.key')}" data-callback="recaptchaCallback"></div>
+                        <span class="captcha-message" id="captcha-alert" style="display: none;">Vui lòng xác nhận CAPTCHA trước khi tiếp tục.</span>
+                    </div>
+                    <!-- Captcha -->
+                    <input type="submit" value="Đăng ký" class="btn solid btn-dky">
+                </form>
+            </div>
+        </div>
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>Bạn chưa có tài khoản?</h3>
+                    <p>Hãy đăng ký tải khoản miễn phí ngay, để có trải nghiệm tốt nhất !!
+                    </p>
+                    <button class="btn transparent" id="sign-up-btn">Đăng ký</button>
+
+                    <img src="/img/register.png" class="image" alt="">
+                </div>
+            </div>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3>Đã có tài khoản?</h3>
+                    <p>Đăng nhập ngay!!</p>
+                    <button class="btn transparent" id="sign-in-btn">Đăng nhập</button>
+
+                    <img src="/img/login.png" class="image" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${visible == 'true'}">
+        <div class="toast active">
+            <div class="toast-content">
+                <div class="message">
+                    <span class="text text-1" th:utext="${thongbao}"></span>
+                </div>
+            </div>
+            <div class="progress active"></div>
+        </div>
+    </div>
+    <!-- JavaScript -->
+    <script src="/js/toast.js"></script>
+    <script src="/js/login.js"></script>
+    <script src="/js/validator.js"></script>
+    <!-- Captcha -->
+    <script type="text/javascript">
+        Validator({
+            form: '#dangky',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.isRequired('#phone', 'Vui lòng nhập số điện thoại'),
+                Validator.isPhone('#phone'),
+                Validator.isRequired('#username', 'Vui lòng nhập tên tài khoản'),
+                Validator.isRequired('#email', 'Vui lòng nhập email'),
+                Validator.isEmail('#email'),
+                Validator.isRequired('#password', 'Vui lòng nhập mật khẩu'),
+                Validator.isRequired('#repassword', 'Vui lòng xác nhận mật khẩu'),
+                Validator.isConfirmed('#repassword', function() {
+                    return document.querySelector('#dangky #password').value;
+                }, 'Nhập lại mật khẩu không khớp'),
+                Validator.chckPass('#password', 'Tổi thiểu 6 ký tự số chữ thường, hoa ký tự đặc biệt'),
+            ]
+        });
+        Validator({
+            form: '#dangnhap',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.isRequired('#dnhap_uname', 'Vui lòng nhập tên đăng nhập!'),
+                Validator.isRequired('#dnhap_pass', 'Vui lòng nhập mật khẩu!'),
+            ]
+        });
+        /* ẩn hiện mật khẩu đăng nhập */
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('dnhap_pass');
+            const togglePasswordButton = document.getElementById('btn_dnhap_pass');
+
+            togglePasswordButton.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Change button text based on the type
+                togglePasswordButton.textContent = type === 'password' ? 'Hiện' : 'Ẩn';
+            });
+        });
+
+        /* Ẩn hiện mật khẩu đăng ký */
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const togglePasswordButton = document.getElementById('btn_dky_pass');
+
+            togglePasswordButton.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Change button text based on the type
+                togglePasswordButton.textContent = type === 'password' ? 'Hiện' : 'Ẩn';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('repassword');
+            const togglePasswordButton = document.getElementById('btn_dky_repass');
+
+            togglePasswordButton.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Change button text based on the type
+                togglePasswordButton.textContent = type === 'password' ? 'Hiện' : 'Ẩn';
+            });
+        });
+    </script>
+    <!-- Captcha -->
+</body>
+
+</html>
